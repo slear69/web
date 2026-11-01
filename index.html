@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Time Arcive</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="paper">
+        <header class="masthead">
+            <div class="ears">
+                <span>Vol. I &middot; No. 1</span>
+                <span>Late Edition</span>
+                <span>Price: One Moment</span>
+
+            </div>
+            <h1>Time Arcive</h1>
+            <div class = "dateline">
+                <span>&ldquo;All the Time That&rsquo;s Fit to Loop&rdquo;</span>
+                <span>Movement Trials &middot; Build 0.1</span>
+                <span id = "levelNo">Level 1</span>
+            </div>
+        </header>
+        <section class="headline">
+            <h2 id="levelName">Local Architect Found Cooperating With Self</h2>
+            <p class = "deck" id="hint">Sixty-second trials continue in the Testing Yard. Each finished edition is reprinted as a clone, and the reader may work beside it.</p>
+        </section>
+        <section class="stats" aria-label="Trial figures">
+            <div class="stat"><b id="time">60.0</b><i>Time left:</i></div>
+            <div class="stat"><b id="round">1</b><i>Worckers</i></div>
+            <div class="stat"><b id="ghosts">0</b><i>Clones active</i></div>
+            <div class="stat"><b id="money">0$</b><i>purse</i></div>
+        </section>
+        <figure class="stage">
+            <canvas id="c" width="800" height="480" aria-label="The Testing Yard"></canvas>
+            <div class="bar"><div id="bar"></div></div>
+            <figcaption>Fig. 1 &mdash; The Testing Yard. The reader appears in red ink; former editions of the reader appear in blue.</figcaption>
+            <div class ="shop" id="shop" hidden>
+                <h3>The Classifileds</h3>
+                <p class="shop-money">Purse: <b id="shopMoney">$0</b></p>
+                <ul id="shopList"></ul>
+                <button class="btn primary" id="shopDone">Next Level</button>
+            </div>
+        </figure>
+        <section class="under">
+            <div>
+                <h3> Instructions to Readers</h3>
+                <dl class="keys">
+                    <dt>W A S D / Arrows</dt><dd>Walk around the Level</dd>
+                    <dt>Enter</dt><dd>Clone your last run true</dd>
+                    <dt>Backspace</dt><dd>Recall your last clone</dd>
+                </dl>
+            </div>
+            <div class="pad" aria-label="On-screen controls">
+                <button data-k="up" aria-label="Up">&#9650;</button>
+                <button data-k="left" aria-label="Left">&#9664;</button>
+                <button data-k="down" aria-label="Down">&#9660;</button>
+                <button data-k="right" aria-label="Right">&#9654;</button>
+            </div>
+            <div class="actions">
+                <button class="btn primary" id="endBtn">Close Edition</button>
+                <button class="btn" id="resetBtn">Recall All</button>
+            </div>
+        </section>
+    </main>
+<script src="game.js"></script>
+</body>
+</html>
