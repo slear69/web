@@ -122,7 +122,7 @@
             reward:25,
             hints:["use your clones all the ways you learned to use"],
             shooters : [{at:[18,5],range:5,every:60}],
-            enemies:[{from:[15,7],to:[1,7] , speed : 120}],
+            enemies:[{from:[15,8],to:[1,8] , speed : 220}],
             map:[
                 "####################",
                 "#@.................#",
@@ -135,6 +135,74 @@
                 "#..................#",
                 "#..................#",
                 "#.........*........#",
+                "####################",
+            ]
+        },
+        {
+            name:"two buttons, one door",
+            seconds: 40,
+            reward: 40,
+            hints:["Both plates marked a must be pressed at the same time to open gate A. Step on one plate, then press Enter.",
+                   "Your first clone holds one plate. Stand on the other plate, then press Enter.",
+                   "Both clones hold a plate, so the gate is open. Walk through to the exit."],
+            map:[
+                "####################",
+                "#@.................#",
+                "#..................#",
+                "#..................#",
+                "#.a..............a.#",
+                "#..................#",
+                "#########A##########",
+                "#..................#",
+                "#..................#",
+                "#..................#",
+                "#.........*........#",
+                "####################",
+            ]
+        },
+        {
+            name:"the switchback patrol",
+            seconds: 55,
+            reward: 30,
+            hints:["The plate opens the only crossing in the first wall. Leave a clone on it, then use the openings in the next wall to reach the exit."],
+            enemies:[{from:[10,1],to:[10,9],speed:135}],
+            map:[
+                "####################",
+                "#@....#......#.....#",
+                "#.....#......#.....#",
+                "#.a...#.....b#.....#",
+                "#.....#......#.....#",
+                "#.....A......B.....#",
+                "#.....#......#.....#",
+                "#.....#......#.....#",
+                "#.....#......#.....#",
+                "#.a...#.....b#.....#",
+                "#.....#......#....*#",
+                "####################",
+            ]
+        },
+        {
+            name:"blind corners",
+            seconds: 60,
+            reward: 35,
+            hints:["The walls break the gunners' sightlines, but the guard patrols the open middle. Move between cover and use a clone to draw fire when needed."],
+            shooters:[
+                {at:[17,2],range:8,every:65},
+                {at:[2,8],range:8,every:65},
+            ],
+            enemies:[{from:[7,5],to:[12,5],speed:125}],
+            map:[
+                "####################",
+                "#@.................#",
+                "#.............#....#",
+                "#.............#....#",
+                "#.............#....#",
+                "#..................#",
+                "#....#.............#",
+                "#....#.............#",
+                "#....#.............#",
+                "#..................#",
+                "#.................*#",
                 "####################",
             ]
         }
@@ -427,9 +495,15 @@
     function updateDoors(list)
     {
         open={} ; pressed = {};
+        const total = {}, down = {};
         for(const p of plates)
-            if (list.some(e => Math.floor(e.x / TILE) === p.c && Math.floor(e.y / TILE) === p.r))
-                pressed[p.k] = open[p.k] = true;
+        {
+            total[p.k] = (total[p.k] || 0) + 1;
+            p.on = list.some(e => Math.floor(e.x / TILE) === p.c && Math.floor(e.y / TILE) === p.r);
+            if (p.on) down[p.k] = (down[p.k] || 0) + 1;
+        }
+        for (const k in total)
+            if (down[k] === total[k]) pressed[k] = open[k] = true;
         for(const d of doors)
         {
             if(open[d.k]) continue;
@@ -553,7 +627,7 @@
         ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.font = "700 14px 'Courier Prime', 'Courier New', monospace";
         for (const p of plates) {
-            const x = p.c * TILE, y = p.r * TILE, on = !!pressed[p.k];
+            const x = p.c * TILE, y = p.r * TILE, on = !!p.on;
             ctx.strokeStyle = C.ink; ctx.lineWidth = 2;
             ctx.strokeRect(x + 7, y + 7, TILE - 14, TILE - 14);
             if (on) { ctx.fillStyle = C.ink; ctx.fillRect(x + 7, y + 7, TILE - 14, TILE - 14); }
